@@ -1,22 +1,21 @@
-#include "th.h"
+#include "ThreadPool.h"
 #include <iostream>
 #include <thread>
 #include <chrono>
 
 
 
-int task(int n){
+int task(){
     std::this_thread::sleep_for(std::chrono::seconds(1));
-    return n;
+    return 1;
 }
 
 int main() {
-    ThreadPool tp(1);
+    ThreadPool tp(16);
 
     auto start = std::chrono::system_clock::now();
     for (int i = 0; i < 100; ++i) {
-        auto f = tp.submit(task,0);
-        
+        tp.submit(task);
     }
 
     auto end = std::chrono::system_clock::now();
